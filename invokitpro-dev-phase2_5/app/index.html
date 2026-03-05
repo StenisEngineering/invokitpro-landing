@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+
+<script>
+// Force HTTPS - iOS Safari requires HTTPS for crypto and clipboard APIs
+if (window.location.protocol === 'http:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+  window.location.replace(window.location.href.replace('http:', 'https:'));
+}
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>InvoKit Pro v2.0 — Smart Business Toolkit (Offline)</title>
+
+<!-- LICENCE — injected by InvoKit Pro Licence Generator -->
+<meta name="bkp-licence" content="UNLICENSED">
+<meta name="bkp-licensee" content="">
+<!-- PWA: Standard -->
+<meta name="description" content="InvoKit Pro v2.0 — Professional offline invoicing for small businesses. A product of Creovate Glocal Ltd. (RC: 9174160)">
+<meta name="theme-color" content="#0f2447">
+<!-- manifest injected inline by PWA bootstrap below -->
+
+<!-- PWA: Apple / iOS -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="InvoKit Pro">
+<link rel="apple-touch-icon" href="/icon-192.png">
+
+<!-- PWA: Microsoft -->
+<meta name="msapplication-TileColor" content="#0f2447">
+<meta name="mobile-web-app-capable" content="yes">
+
+<link rel="stylesheet" href="styles/app.css">
+<script src="scripts/data/db.js" defer></script>
+  <script src="scripts/ui/ui.js" defer></script>
+  <script src="scripts/security/licence.js" defer></script>
+  <script src="scripts/app.main.js" defer></script>
+</head>
+<body>
+
+<div id="shell">
+
+<!-- ══ TOPBAR ══ -->
+<header id="topbar">
+  <button id="sbToggle" class="tbtn tbtn-g" type="button" aria-label="Menu" onclick="toggleSidebar()">
+    <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    <span class="hide-sm">Menu</span>
+  </button>
+  <div class="tb-brand">
+    <img src="data:image/png;base64,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" alt="IP" style="width:28px;height:28px;border-radius:6px;flex-shrink:0;">
+    <div class="tb-name">Invo<em>Kit</em> Pro</div>
+    <span class="tb-ver">v2.0</span>
+    <span id="tb-bizname" style="font-size:.72rem;color:rgba(255,255,255,.7);margin-left:6px;display:none;"></span>
+  </div>
+  <div id="bkp-badge" title="This copy is licensed to this user">🔐 <span id="bkp-badge-name"></span></div>
+  <button class="tbtn tbtn-g" onclick="doBackup()">
+    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Backup
+  </button>
+  <label class="tbtn tbtn-g" style="cursor:pointer" for="restoreInput">
+    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Restore
+  </label>
+  <input type="file" id="restoreInput" accept=".json" style="display:none" onchange="doRestore(event)">
+  <!-- PWA install button — shown only when browser fires beforeinstallprompt -->
+  <button id="pwa-install-btn" class="tbtn tbtn-g" style="display:none" onclick="pwaInstall()" title="Install InvoKit Pro as an app">
+    <svg viewBox="0 0 24 24"><path d="M12 2v13M7 10l5 5 5-5"/><rect x="3" y="18" width="18" height="3" rx="1"/></svg>
+    <span class="hide-sm">Install App</span>
+  </button>
+  <button class="tbtn tbtn-a" onclick="openNewInvoice()">
+    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    New Invoice
+  </button>
+</header>
+
+<!-- ══ SIDEBAR ══ -->
+<nav id="sidebar">
+  <div class="sb-sec">
+    <div class="sbi on" id="sbi-dash" onclick="go('dash')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </div>
+  </div>
+  <div class="sb-sec">
+    <div class="sb-lbl">Billing</div>
+    <!-- FIX #9 + #13: Added Invoices nav item with correct id -->
+    <div class="sbi" id="sbi-invoices" onclick="go('invoices')">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Invoices
+      <!-- FIX #3: Added missing cnt-inv badge element -->
+      <span class="sb-badge" id="cnt-inv">0</span>
+    </div>
+    <div class="sbi" id="sbi-receipts" onclick="go('receipts')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+        <line x1="16" y1="2" x2="16" y2="6"></line>
+        <line x1="8" y1="2" x2="8" y2="6"></line>
+        <line x1="3" y1="10" x2="21" y2="10"></line>
+      </svg>
+      Receipts
+      <span class="sb-badge" id="cnt-rct">0</span>
+    </div>
+    <!-- FIX #2 + #12: Removed stray <tbody id="rct-tbody"> that was incorrectly placed here -->
+  </div>
+  <div class="sb-sec">
+    <div class="sb-lbl">Business Data</div>
+    <div class="sbi" id="sbi-clients" onclick="go('clients')">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Clients
+      <span class="sb-badge" id="cnt-cli">0</span>
+    </div>
+    <div class="sbi" id="sbi-items" onclick="go('items')">
+      <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      Item Library
+    </div>
+  
+    <div class="sbi" id="sbi-inventory" onclick="go('inventory')">
+      <span style="width:18px;display:inline-block;text-align:center;">📦</span>
+      Inventory
+      <span class="sb-badge">Soon</span>
+    </div>
+    <div class="sbi" id="sbi-expenses" onclick="go('expenses')">
+      <span style="width:18px;display:inline-block;text-align:center;">💰</span>
+      Expenses
+      <span class="sb-badge">Soon</span>
+    </div>
+</div>
+  <div class="sb-sec">
+    <div class="sb-lbl">System</div>
+    <div class="sbi" id="sbi-settings" onclick="go('settings')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Settings
+    </div>
+    <div class="sbi" id="sbi-about" onclick="go('about')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      About
+    </div>
+    <div class="sbi" id="sbi-support" onclick="go('support')">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Support
+    </div>
+    <div class="sbi" id="sbi-getting-started" onclick="openOnboarding()">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Getting Started
+    </div>
+  </div>
+</nav>
+
+<div id="sbOverlay" onclick="toggleSidebar(false)"></div>
+
+<!-- ══ MAIN ══ -->
+<div id="main">
+
+<!-- ══ DASHBOARD ══ -->
+<div class="screen on" id="s-dash">
+  <div class="ph">
+    <div class="ph-row"><div><div class="ph-title">Business Control Centre</div><div class="ph-sub">Smart Business Toolkit (Offline)</div></div></div>
+  </div>
+  <div class="srow">
+    <div class="sc" style="--sc:var(--P)"><div class="sv" id="ds-inv">0</div><div class="sl">Invoices</div></div>
+    <div class="sc" style="--sc:var(--ok);position:relative;">
+      <div class="sv" id="ds-rev">—</div>
+      <div class="sl" style="display:flex;align-items:center;gap:6px;">
+        Revenue
+        <button id="rev-eye" onclick="toggleReveal()" title="Show / hide revenue"
+          style="background:none;border:none;padding:0;cursor:pointer;color:var(--muted);display:flex;align-items:center;line-height:1;margin-left:2px;"
+          aria-label="Toggle revenue visibility">
+          <svg id="rev-eye-svg" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+      </div>
+      <div class="ss" id="ds-rev2"></div>
+    </div>
+    <div class="sc" style="--sc:var(--err)"><div class="sv" id="ds-ov">0</div><div class="sl">Overdue</div></div>
+    <div class="sc" style="--sc:var(--info)"><div class="sv" id="ds-cli">0</div><div class="sl">Clients</div></div>
+  </div>
+  <div class="qa-row">
+    <div class="qa qa-inv" onclick="openNewInvoice()">
+      <div class="qa-ico"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+      <div><div class="qa-lbl">New Invoice</div><div class="qa-sub">Create & export</div></div>
+    </div>
+    <div class="qa qa-cli" onclick="go('clients')">
+      <div class="qa-ico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+      <div><div class="qa-lbl">Clients</div><div class="qa-sub">Manage contacts</div></div>
+    </div>
+    <div class="qa qa-itm" onclick="go('items')">
+      <div class="qa-ico"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/></svg></div>
+      <div><div class="qa-lbl">Item Library</div><div class="qa-sub">Products & services</div></div>
+    </div>
+    <div class="qa qa-bk" onclick="doBackup()">
+      <div class="qa-ico"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+      <div><div class="qa-lbl">Backup Data</div><div class="qa-sub">Export JSON</div></div>
+    </div>
+    <div class="qa qa-inv qa soon" onclick="soonModule('Expenses')">
+      <div class="qa-ico"><svg viewBox="0 0 24 24"><path d="M6 2h12v4H6z"/><path d="M4 6h16v16H4z"/><path d="M8 10h8M8 14h8M8 18h6"/></svg></div>
+      <div><div class="qa-lbl">Expenses</div><div class="qa-sub">Coming soon</div></div>
+    </div>
+    <div class="qa qa-inv qa soon" onclick="soonModule('Inventory')">
+      <div class="qa-ico"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.73z"/><path d="M3.3 7.3 12 12l8.7-4.7"/><path d="M12 22V12"/></svg></div>
+      <div><div class="qa-lbl">Inventory</div><div class="qa-sub">Coming soon</div></div>
+    </div>
+
+  </div>
+  <div style="padding:0 22px 22px;">
+    <div class="card">
+      <div style="padding:12px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;">
+        <span style="font-size:.74rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.8px;">Recent Invoices</span>
+        <button class="btn btn-g btn-xs" onclick="go('invoices')">View all</button>
+      </div>
+      <div id="dash-inv-list"><div style="padding:24px;text-align:center;font-size:.82rem;color:var(--muted);">No invoices yet. Create your first one!</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ INVOICES LIST ══ -->
+<div class="screen" id="s-invoices">
+  <div class="ph">
+    <div class="ph-row">
+      <div><div class="ph-title">Invoices</div><div class="ph-sub">All invoices — create, edit, export</div></div>
+      <div class="ph-acts">
+        <button class="btn btn-g btn-sm" onclick="exportCSV('invoices')"><svg viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> CSV</button>
+        <button class="btn btn-p" onclick="openNewInvoice()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New Invoice</button>
+      </div>
+    </div>
+  </div>
+  <div class="screen-body">
+    <div class="card">
+      <div style="padding:11px 14px;border-bottom:1px solid var(--bd);display:flex;gap:8px;">
+        <input class="fi" id="inv-search" placeholder="Search by client, number…" oninput="renderInvoices(this.value)" style="flex:1;padding:7px 10px;">
+        <select class="fi" id="inv-status-f" onchange="renderInvoices()" style="width:130px;padding:7px 10px;">
+          <option value="">All Status</option>
+          <option value="draft">Draft</option>
+          <option value="issued">Issued</option>
+          <option value="paid">Paid</option>
+          <option value="overdue">Overdue</option>
+        </select>
+      </div>
+      <!-- FIX #4: Changed class from twrap to table-scroll -->
+      <div class="table-scroll"><table class="dt" id="inv-table">
+        <thead><tr><th>Invoice #</th><th>Client</th><th>Date</th><th>Due Date</th><th class="r">Amount</th><th>Status</th><th></th></tr></thead>
+        <tbody id="inv-tbody"></tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CLIENTS ══ -->
+<div class="screen" id="s-clients">
+  <div class="ph">
+    <div class="ph-row">
+      <div><div class="ph-title">Clients</div><div class="ph-sub">Your client database</div></div>
+      <div class="ph-acts">
+        <button class="btn btn-g btn-sm" onclick="exportCSV('clients')"><svg viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> CSV</button>
+        <button class="btn btn-p" onclick="openClientModal()">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Client
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="screen-body">
+    <div class="card" style="overflow:hidden;">
+      <div style="padding:12px 16px;border-bottom:1px solid var(--bd);">
+        <input class="fi" placeholder="Search clients…" oninput="renderClients(this.value)" style="width:100%;padding:8px 12px;box-sizing:border-box;">
+      </div>
+      <!-- FIX #4: Changed class from twrap to table-scroll -->
+      <div class="table-scroll" style="width:100%;overflow-x:auto;">
+        <table class="dt" style="width:100%;min-width:600px;table-layout:auto;">
+          <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th></th></tr></thead>
+          <tbody id="cli-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ITEMS ══ -->
+<div class="screen" id="s-items">
+  <div class="ph">
+    <div class="ph-row">
+      <div><div class="ph-title">Item Library</div><div class="ph-sub">Saved products & services — autocomplete in invoices</div></div>
+      <div class="ph-acts">
+        <button class="btn btn-p" onclick="openItemModal()">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Item
+        </button>
+        <button class="btn btn-g btn-sm" onclick="exportCSV('items')"><svg viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> CSV</button>
+      </div>
+    </div>
+  </div>
+  <div class="screen-body">
+    <div class="card">
+      <div style="padding:11px 14px;border-bottom:1px solid var(--bd);">
+        <input class="fi" placeholder="Search items…" oninput="renderItems(this.value)" style="width:100%;padding:7px 10px;">
+      </div>
+      <!-- FIX #4: Changed class from twrap to table-scroll -->
+      <div class="table-scroll">
+        <table class="dt" style="width:100%;table-layout:auto;">
+          <thead><tr><th>Name</th><th>Description</th><th class="r">Default Price</th><th></th></tr></thead>
+          <tbody id="itm-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ RECEIPTS ══ -->
+<div class="screen" id="s-receipts">
+  <div class="ph">
+    <div class="ph-row">
+      <div><div class="ph-title">Receipts</div><div class="ph-sub">Payment records • <span id="cnt-rct-sub">0</span> total</div></div>
+      <div style="display:flex;gap:8px;margin-left:auto;">
+        <button class="btn btn-g btn-sm" onclick="exportCSV('receipts')" title="Export receipts as CSV"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export CSV</button>
+        <button class="btn btn-p btn-sm" onclick="printReceipt()" title="Print selected receipt" id="rct-print-btn"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> Print</button>
+      </div>
+      <div class="ph-acts">
+        <button class="btn btn-g btn-sm" onclick="exportCSV('receipts')"><svg viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> CSV</button>
+        <button class="btn btn-a" onclick="openNewReceipt()">+ New Receipt</button>
+      </div>
+    </div>
+  </div>
+  <div class="screen-body">
+    <div class="card">
+      <!-- FIX #4: Changed class from twrap to table-scroll -->
+      <div class="table-scroll">
+        <table class="dt">
+          <thead><tr><th>Receipt #</th><th>Client</th><th>Description</th><th>Date</th><th class="r">Amount</th><th></th></tr></thead>
+          <!-- FIX #2: Only ONE rct-tbody here, the stray one in the sidebar was removed -->
+          <tbody id="rct-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ══ INVENTORY (COMING SOON) ══ -->
+<div class="screen" id="s-inventory">
+  <div class="ph">
+    <div class="ph-row">
+      <div><div class="ph-title">Inventory</div><div class="ph-sub">Coming soon</div></div>
+    </div>
+  </div>
+  <div class="screen-body">
+    <div class="card cp">
+      <h3 style="margin:0 0 8px;">Inventory module is coming soon</h3>
+      <p style="margin:0;color:var(--muted);line-height:1.6;">
+        This module is part of <strong>InvoKit Pro — Smart Business Toolkit (Offline)</strong>.
+        Your licence includes access when released.
+      </p>
+      <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
+        <button class="btn btn-g" onclick="go('dash')">Back to Dashboard</button>
+        <a class="btn btn-o" href="mailto:support@getinvokitpro.com?subject=Inventory%20Module%20Early%20Access">Request early access</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EXPENSES (COMING SOON) ══ -->
+<div class="screen" id="s-expenses">
+  <div class="ph">
+    <div class="ph-row">
+      <div><div class="ph-title">Expenses</div><div class="ph-sub">Coming soon</div></div>
+    </div>
+  </div>
+  <div class="screen-body">
+    <div class="card cp">
+      <h3 style="margin:0 0 8px;">Expenses module is coming soon</h3>
+      <p style="margin:0;color:var(--muted);line-height:1.6;">
+        This module is part of <strong>InvoKit Pro — Smart Business Toolkit (Offline)</strong>.
+        Your licence includes access when released.
+      </p>
+      <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
+        <button class="btn btn-g" onclick="go('dash')">Back to Dashboard</button>
+        <a class="btn btn-o" href="mailto:support@getinvokitpro.com?subject=Expenses%20Module%20Early%20Access">Request early access</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SETTINGS ══ -->
+<div class="screen" id="s-settings">
+  <div class="ph"><div class="ph-title">Settings</div><div class="ph-sub">Business profile & invoice defaults</div></div>
+  <div class="set-grid">
+    <div class="set-card">
+      <h4>Business Profile</h4>
+      <div class="form-stack">
+        <div class="fg"><label>Business Name</label><input id="s-name" oninput="saveSetting()" maxlength="80"></div>
+        <div class="fg"><label>Tagline / Type</label><input id="s-tag" oninput="saveSetting()" maxlength="60"></div>
+        <div class="fg"><label>Registration No.</label><input id="s-reg" oninput="saveSetting()" maxlength="30"></div>
+        <div class="fg"><label>Address</label><textarea id="s-addr" rows="2" oninput="saveSetting()" maxlength="200"></textarea></div>
+        <div class="fg2">
+          <div class="fg"><label>Email</label><input id="s-email" type="email" oninput="saveSetting()" maxlength="100"></div>
+          <div class="fg"><label>Phone</label><input id="s-phone" type="tel" oninput="saveSetting()" maxlength="20"></div>
+        </div>
+        <div class="fg"><label>Website</label><input id="s-web" oninput="saveSetting()" maxlength="100"></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div class="set-card">
+        <h4>Bank Details</h4>
+        <div class="form-stack">
+          <div class="fg"><label>Bank Name</label><input id="s-bank" oninput="saveSetting()" maxlength="60"></div>
+          <div class="fg"><label>Account Name</label><input id="s-aname" oninput="saveSetting()" maxlength="80"></div>
+          <div class="fg2">
+            <div class="fg"><label>Account Number</label><input id="s-anum" oninput="saveSetting()" maxlength="30"></div>
+            <div class="fg"><label>Sort Code / IBAN</label><input id="s-sort" oninput="saveSetting()" maxlength="30"></div>
+          </div>
+        </div>
+      </div>
+      <div class="set-card">
+        <h4>Invoice Defaults</h4>
+        <div class="form-stack">
+          <div class="fg2">
+            <div class="fg"><label>Default Currency</label>
+              <select id="s-cur" onchange="saveSetting()"></select>
+            </div>
+            <div class="fg"><label>Default VAT %</label><input id="s-vat" type="number" value="7.5" oninput="saveSetting()" maxlength="20"></div>
+          </div>
+          <div class="fg"><label>Default Payment Terms</label><input id="s-terms" value="Payment due within 30 days" oninput="saveSetting()" maxlength="500"></div>
+          <div class="fg"><label>Default Invoice Notes</label><textarea id="s-notes" rows="2" oninput="saveSetting()" maxlength="300"></textarea></div>
+          <div class="fg"><label>Default Invoice Template</label>
+            <select id="s-doctheme" onchange="saveSetting()">
+              <option value="blue">Corporate Blue</option>
+              <option value="emerald">Emerald</option>
+              <option value="obsidian">Obsidian</option>
+              <option value="pearl">Pearl</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="set-card" style="background:#fef9f9;border-color:#fecaca;">
+        <h4 style="color:var(--err);">Danger Zone</h4>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+          <button class="btn btn-d btn-sm" onclick="confirmClear('draft')">Reset Current Draft</button>
+          <button class="btn btn-d btn-sm" onclick="confirmClear('all')">Reset ALL Data</button>
+          <button class="btn btn-o btn-sm" onclick="openOnboarding()" style="margin-left:auto;"
+                  title="Reopen the Business Setup Wizard to update your profile">
+            ⚙ Restart Setup Wizard
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="set-grid" style="margin-top:14px;">
+    <div class="set-card">
+      <h4>Invoice Number Format</h4>
+      <div class="form-stack">
+        <div class="fg3">
+          <div class="fg"><label>Prefix</label><input id="s-pfx" value="INV" maxlength="6" oninput="updateNumPreview()"></div>
+          <div class="fg"><label>Separator</label><input id="s-sep" value="-" maxlength="2" oninput="updateNumPreview()"></div>
+          <div class="fg"><label>Pad Length</label><input id="s-pad" type="number" value="4" min="1" max="8" oninput="updateNumPreview()"></div>
+        </div>
+        <div class="fg"><label>Starting Number</label><input id="s-start" type="number" value="1" min="1" oninput="updateNumPreview()"></div>
+        <div style="font-size:.74rem;color:var(--muted);background:var(--sur3);padding:8px 10px;border-radius:var(--r);">
+          Next invoice: <strong id="num-preview">INV-0001</strong>
+        </div>
+        <button class="btn btn-p btn-sm w100" onclick="saveSetting();toast('Number format saved ✓','ok')">Save Format</button>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:13px;">
+      <div class="set-card">
+        <h4>Default Business Logo</h4>
+        <p style="font-size:.73rem;color:var(--muted);margin-bottom:10px;">Auto-loads on every new invoice.</p>
+        <!-- Logo upload zone and remove button are intentionally SEPARATE elements.
+             Keeping the file input inside the zone (as an overlay) caused the remove
+             button to open the file picker because the invisible input sat on top of it. -->
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <label for="s-logo-file" id="lz-settings-logo" class="lz-logo" style="cursor:pointer;display:block;">
+            <input type="file" id="s-logo-file" accept="image/*" style="display:none;" onchange="handleSettingsLogo(event)">
+            <img class="lz-logo-img" id="s-logo-img" src="" alt="">
+            <div id="s-logo-txt" style="font-size:.73rem;color:var(--muted);"><strong style="display:block;font-size:.76rem;color:var(--ink2);margin-bottom:1px;">Upload Default Logo</strong>PNG · JPG · SVG — click to browse</div>
+          </label>
+          <button id="s-logo-rmv" onclick="removeSettingsLogo(event)" style="font-size:.72rem;color:var(--err);background:var(--errb);border:1px solid rgba(220,38,38,.2);border-radius:var(--r);cursor:pointer;font-family:inherit;padding:5px 10px;display:none;align-self:flex-start;">✕ Remove logo</button>
+        </div>
+      </div>
+      <div class="set-card">
+        <h4>Default Invoice Template</h4>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button class="tpill on" data-at="blue"     onclick="setDefaultDocTheme('blue',this)">    <span class="dot" style="background:#1a3a6b"></span>Corporate</button>
+          <button class="tpill"    data-at="emerald"  onclick="setDefaultDocTheme('emerald',this)"> <span class="dot" style="background:#005c37"></span>Emerald</button>
+          <button class="tpill"    data-at="obsidian" onclick="setDefaultDocTheme('obsidian',this)"><span class="dot" style="background:#111"></span>Premium</button>
+          <button class="tpill"    data-at="pearl"    onclick="setDefaultDocTheme('pearl',this)">   <span class="dot" style="background:#1a3a6b"></span>Corporate</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bk-sec" style="margin:14px 22px 22px;">
+    <h4>💾 Backup &amp; Data Management</h4>
+    <div class="bk-row">
+      <div class="bk-info"><strong>Export Backup (JSON)</strong><span>Downloads all invoices, clients, items &amp; settings.</span></div>
+      <button class="btn btn-o btn-sm" onclick="doBackup()">⬇ Export</button>
+    </div>
+    <div class="bk-row">
+      <div class="bk-info"><strong>Import Backup (JSON)</strong><span>Restores all data from a InvoKit backup.</span></div>
+      <label class="btn btn-o btn-sm" style="cursor:pointer" for="restoreInp2">⬆ Import</label>
+      <input type="file" id="restoreInp2" accept=".json" style="display:none" onchange="doRestore(event)">
+    </div>
+    <div class="bk-row">
+      <div class="bk-info"><strong>Export as CSV</strong><span>Download your data as spreadsheet files — open in Excel or Google Sheets.</span></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">
+        <button class="btn btn-o btn-sm" onclick="exportCSV('invoices')">Invoices</button>
+        <button class="btn btn-o btn-sm" onclick="exportCSV('clients')">Clients</button>
+        <button class="btn btn-o btn-sm" onclick="exportCSV('items')">Items</button>
+        <button class="btn btn-o btn-sm" onclick="exportCSV('receipts')">Receipts</button>
+      </div>
+    </div>
+    <div class="bk-row">
+      <div class="bk-info"><strong>Reset Current Draft</strong><span>Clears the invoice editor form only.</span></div>
+      <button class="btn btn-g btn-sm" onclick="resetDraftOnly()">↺ Reset Draft</button>
+    </div>
+    <div class="bk-row">
+      <div class="bk-info"><strong style="color:var(--err);">Reset ALL Data</strong><span>Permanently deletes everything.</span></div>
+      <button class="btn btn-d btn-sm" onclick="openResetAllModal()">🗑 Reset All</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ABOUT ══ -->
+<div class="screen" id="s-about">
+  <div class="ph"><div class="ph-row"><div>
+    <div class="ph-title">About</div>
+    <div class="ph-sub">Smart Business Toolkit (Offline)</div>
+  </div></div></div>
+  <div style="max-width:640px;padding:18px 22px;display:flex;flex-direction:column;gap:14px;">
+    <div style="background:var(--sur);border:1px solid var(--bd);border-radius:var(--rl);padding:24px 20px;text-align:center;">
+      <img src="data:image/png;base64,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" style="width:72px;height:72px;border-radius:16px;display:block;margin:0 auto 12px;">
+      <div style="font-size:1.15rem;font-weight:700;color:var(--P);">InvoKit Pro</div>
+      <div style="font-size:.83rem;color:var(--muted);margin-top:4px;">Smart Business Tools. Works Offline.</div>
+      <div style="font-size:.73rem;color:var(--muted);margin-top:6px;">v2.0</div>
+      <div style="font-size:.78rem;color:var(--muted);margin-top:8px;">© 2025 Creovate Glocal Ltd. All rights reserved.<br>RC: 9174160</div>
+    </div>
+    <div style="background:var(--sur);border:1px solid var(--bd);border-radius:var(--rl);padding:18px 20px;">
+      <div style="font-size:.85rem;font-weight:700;color:var(--P);margin-bottom:12px;">💡 Quick Tips</div>
+      <div style="font-size:.82rem;color:var(--ink2);line-height:1.7;display:flex;flex-direction:column;gap:8px;">
+        <div><strong>Install as app</strong> — tap the Install App button in the toolbar, or on iOS use Share → Add to Home Screen.</div>
+        <div><strong>Works offline</strong> — once loaded, the app works without internet. Your data stays on your device.</div>
+        <div><strong>Backup regularly</strong> — use the Backup button in the top bar to save a JSON file of all your data.</div>
+        <div><strong>New device</strong> — just restore your backup on the new device to get everything back instantly.</div>
+      </div>
+    </div>
+    <div style="background:var(--sur);border:1px solid var(--bd);border-radius:var(--rl);padding:18px 20px;">
+      <div style="font-size:.85rem;font-weight:700;color:var(--P);margin-bottom:12px;">✅ What's Included</div>
+      <div style="font-size:.82rem;color:var(--ink2);line-height:1.8;">
+        📄 Professional invoices — create, edit, duplicate, export PDF<br>
+        🧾 Receipts — instant receipts with your full business profile<br>
+        👥 Client database — save clients, auto-fill on invoices<br>
+        📦 Product/service library — save items for quick selection<br>
+        🎨 4 invoice themes + multiple layout options<br>
+        💱 Multi-currency support — NGN, GBP, USD, EUR, GHS, KES and more<br>
+        ☁️ Backup and restore — never lose your data<br>
+        📴 Fully offline — no internet needed after first load
+      </div>
+    </div>
+    <div style="background:var(--sur);border:1px solid var(--bd);border-radius:var(--rl);padding:18px 20px;">
+      <div style="font-size:.85rem;font-weight:700;color:var(--P);margin-bottom:10px;">💬 Support</div>
+      <div style="font-size:.82rem;color:var(--ink2);line-height:1.7;">Need help? We respond within 24 hours.</div>
+      <a href="https://wa.me/447310211892?text=Hi%20InvoKit%20Pro%20Support"
+         style="display:inline-flex;align-items:center;gap:8px;margin-top:12px;padding:10px 18px;
+                background:#25D366;color:#fff;border-radius:8px;text-decoration:none;
+                font-weight:600;font-size:.83rem;">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp Support
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SUPPORT ══ -->
+<div class="screen" id="s-support">
+  <div class="ph"><div class="ph-title">Support & Feedback</div><div class="ph-sub">We're here to help — usually respond within 24 hours</div></div>
+  <div class="screen-body">
+
+    <!-- Contact card -->
+    <div class="card cp" style="margin-bottom:14px;">
+      <div style="font-size:.9rem;font-weight:700;margin-bottom:14px;">📬 Contact Us</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="https://wa.me/447310211892?text=Hi%20InvoKit%20Pro%20Support%2C%20I%20need%20help%20with%3A%20" target="_blank"
+           style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:#25d366;color:#fff;border-radius:var(--rl);text-decoration:none;font-weight:600;font-size:.9rem;">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="width:22px;height:22px;flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.025.507 3.934 1.395 5.605L0 24l6.545-1.371A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.002-1.371l-.359-.214-3.722.979.995-3.63-.234-.373A9.818 9.818 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+          Chat on WhatsApp
+        </a>
+      </div>
+      <div style="margin-top:10px;font-size:.76rem;color:var(--muted);">Tap the button above to open WhatsApp with a pre-filled message. Just describe your issue and send.</div>
+    </div>
+
+    <!-- Send feedback form -->
+    <div class="card cp" style="margin-bottom:14px;">
+      <div style="font-size:.9rem;font-weight:700;margin-bottom:14px;">💬 Send Feedback</div>
+      <div class="form-stack">
+        <div class="fg">
+          <label>Type</label>
+          <select class="fi" id="sup-type">
+            <option value="general">General Question</option>
+            <option value="bug">Report a Bug</option>
+            <option value="feature">Feature Request</option>
+            <option value="billing">Licence / Billing</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Your Name</label>
+          <input class="fi" id="sup-name" placeholder="Your name">
+        </div>
+        <div class="fg">
+          <label>Message</label>
+          <textarea class="fi" id="sup-msg" rows="4" placeholder="Describe your question, issue or suggestion…" style="resize:vertical;"></textarea>
+        </div>
+      </div>
+      <div style="margin-top:12px;display:flex;align-items:center;gap:10px;">
+        <button class="btn btn-p" onclick="sendSupportWhatsApp()" style="flex:1;">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="width:15px;height:15px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.025.507 3.934 1.395 5.605L0 24l6.545-1.371A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.002-1.371l-.359-.214-3.722.979.995-3.63-.234-.373A9.818 9.818 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+          Send via WhatsApp
+        </button>
+        <span id="sup-status" style="font-size:.8rem;color:var(--ok);"></span>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="card cp" style="margin-bottom:14px;">
+      <div style="font-size:.9rem;font-weight:700;margin-bottom:14px;">❓ Frequently Asked Questions</div>
+      <div style="display:flex;flex-direction:column;gap:2px;" id="faq-list">
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>My licence key is not activating — what do I do?</span>
+            <svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-a">Make sure you are on <strong>https://</strong> (not http://) and that you are not in Private/Incognito browsing mode. Copy the key exactly as given — no extra spaces. If it still fails, contact us on WhatsApp with your key and we will sort it out.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>Can I use InvoKit Pro on multiple devices?</span>
+            <svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-a">Yes — your licence key can activate the app on any of your devices. Data is stored locally on each device and does not sync automatically. Use <strong>Settings → Export Backup</strong> on one device, then <strong>Import Backup</strong> on the other to transfer your data.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>Will I lose my data if I clear my browser?</span>
+            <svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-a">Yes — clearing browser data removes your InvoKit data too. Always export a backup first from Settings → Export Backup (JSON). Restore it any time using the Import Backup button.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>Does InvoKit Pro work without internet?</span>
+            <svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-a">Yes — after your first visit the app works fully offline. Your data never leaves your device. Internet is only needed for the initial load and app updates. Note: PDF export uses a higher-quality method when online; an offline fallback (Print to PDF) is always available.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>How do I install InvoKit Pro as an app on my phone?</span>
+            <svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-a"><strong>Android:</strong> Open in Chrome, tap the three-dot menu → Add to Home Screen.<br><strong>iPhone:</strong> Open in Safari, tap the Share button → Add to Home Screen.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>Is this a subscription or one-time payment?</span>
+            <svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-a">InvoKit Pro offers two plans — <strong>Annual (£25/yr)</strong>, which renews each year and includes all updates for the duration of your subscription, and <strong>Lifetime (£60)</strong>, a single one-time payment that gives you permanent access with all future updates included at no extra cost.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>How do I download my invoice as a PDF?</span>
+            <svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-a">Open the invoice in the editor, then click the <strong>Export PDF</strong> button in the top toolbar. If you are online, a high-quality PDF downloads directly. If offline, your browser's Print dialog opens — choose <strong>Save as PDF</strong> as the destination.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>How do I update my business name, logo or bank details?</span>
+            <svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-a">Go to <strong>Settings</strong> from the sidebar. Your business name, tagline, address, phone, email, registration number, logo and bank details are all managed there. Changes apply to all new invoices immediately.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>Which currencies does InvoKit Pro support?</span>
+            <svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-a">InvoKit Pro supports <strong>GBP (£), USD ($), EUR (€), NGN (₦), GHS (₵), KES (KSh), ZAR (R), CAD (CA$)</strong> and <strong>AUD (A$)</strong>. You can set your default currency in Settings and choose a different currency per invoice if needed.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>Can I customise the invoice template and colours?</span>
+            <svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-a">Yes — inside the invoice editor, expand the <strong>Logo &amp; Theme</strong> section to choose from four professional layouts (Classic, Split, Premium, Corporate) and customise the primary and accent colours to match your brand.</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ EDITOR SCREEN ══ -->
+<div class="sflex" id="s-editor">
+  <div class="editor-wrap">
+    <aside class="ef" id="ef">
+
+      <div class="ef-topbar">
+        <div class="left">
+          <div class="ttl">Invoice Editor</div>
+                <div class="ef-nav" id="ef-nav"></div>
+<div class="sub">Build your invoice — preview on demand</div>
+        </div>
+        <div class="actions">
+          <button class="btn btn-o btn-sm" id="btn-preview-main" onclick="togglePreview()" title="Preview (A4) — opens focus mode">👁 Preview</button>
+          <button class="btn btn-o btn-sm" onclick="saveInvoice()">💾 Save</button>
+          <button class="btn btn-a btn-sm" onclick="printInvoice()" title="Recommended: export PDF via print engine">⬇ Export PDF</button>
+          <button class="btn btn-o btn-sm" onclick="exportPDF()" title="Advanced PDF (beta)">✨ Advanced PDF</button>
+        </div>
+      </div>
+
+      <div class="efsec">
+        <div class="efhdr" onclick="this.closest('.efsec').classList.toggle('col')">
+          <div class="efhdr-t"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Logo & Theme</div>
+          <span class="efarr">▾</span>
+        </div>
+        <div class="efbd">
+          <div class="logo-zone" id="logo-zone">
+            <input type="file" accept="image/*" onchange="handleLogo(event)">
+            <img class="logo-preview" id="logo-img" src="" alt="">
+            <div class="logo-txt" id="logo-txt-wrap"><strong>Upload Logo</strong>PNG · JPG · SVG</div>
+            <button class="logo-rmv" id="logo-rmv" onclick="removeLogo(event)">✕ Remove</button>
+          </div>
+          <div style="margin-top:11px;">
+            <div class="lbl" style="margin-bottom:7px;">Invoice Template Theme</div>
+            <div class="tp-row">
+              <button class="tpill on" data-t="blue" onclick="setDocTheme('blue',this)"><span class="dot" style="background:#1a3a6b"></span>Classic</button>
+              <button class="tpill" data-t="emerald" onclick="setDocTheme('emerald',this)"><span class="dot" style="background:#005c37"></span>Emerald</button>
+              <button class="tpill" data-t="obsidian" onclick="setDocTheme('obsidian',this)"><span class="dot" style="background:#111"></span>Premium</button>
+              <button class="tpill" data-t="pearl" onclick="setDocTheme('pearl',this)"><span class="dot" style="background:#1a3a6b"></span>Corporate</button>
+            </div>
+            <div style="margin-top:12px;">
+              <div class="lbl" style="margin-bottom:7px;">Invoice Layout</div>
+              <div class="layout-picker">
+                <button class="lpill on" data-l="1" onclick="setLayout(1)">
+                  <svg class="lp-svg" viewBox="0 0 38 48" fill="none"><rect x="0" y="0" width="38" height="12" rx="2" fill="currentColor" opacity=".85"/><rect x="0" y="15" width="18" height="4" rx="1" fill="currentColor" opacity=".3"/><rect x="20" y="15" width="18" height="4" rx="1" fill="currentColor" opacity=".3"/><rect x="0" y="22" width="38" height="14" rx="1" fill="currentColor" opacity=".18"/><rect x="0" y="39" width="38" height="7" rx="1" fill="currentColor" opacity=".5"/></svg>
+                  <span>Classic</span>
+                </button>
+                <button class="lpill" data-l="2" onclick="setLayout(2)">
+                  <svg class="lp-svg" viewBox="0 0 38 48" fill="none"><rect x="0" y="0" width="12" height="48" rx="2" fill="currentColor" opacity=".7"/><rect x="15" y="0" width="23" height="6" rx="1" fill="currentColor" opacity=".4"/><rect x="15" y="9" width="23" height="20" rx="1" fill="currentColor" opacity=".18"/><rect x="15" y="32" width="23" height="8" rx="1" fill="currentColor" opacity=".28"/><rect x="15" y="43" width="14" height="4" rx="1" fill="currentColor" opacity=".45"/></svg>
+                  <span>Split</span>
+                </button>
+                <button class="lpill" data-l="3" onclick="setLayout(3)">
+                  <svg class="lp-svg" viewBox="0 0 38 48" fill="none"><rect x="6" y="1" width="26" height="7" rx="1" fill="currentColor" opacity=".75"/><rect x="0" y="11" width="38" height="1" fill="currentColor" opacity=".35"/><rect x="0" y="15" width="16" height="4" rx="1" fill="currentColor" opacity=".28"/><rect x="22" y="15" width="16" height="4" rx="1" fill="currentColor" opacity=".28"/><rect x="0" y="22" width="38" height="16" rx="1" fill="currentColor" opacity=".18"/><rect x="22" y="41" width="16" height="5" rx="1" fill="currentColor" opacity=".5"/></svg>
+                  <span>Premium</span>
+                </button>
+                <button class="lpill" data-l="4" onclick="setLayout(4)">
+                  <svg class="lp-svg" viewBox="0 0 38 48" fill="none"><rect x="0" y="0" width="38" height="16" rx="2" fill="currentColor" opacity=".85"/><rect x="3" y="3" width="14" height="4" rx="1" fill="white" opacity=".35"/><rect x="22" y="2" width="13" height="9" rx="1" fill="white" opacity=".2"/><rect x="0" y="19" width="38" height="4" rx="0" fill="currentColor" opacity=".12"/><rect x="0" y="26" width="38" height="12" rx="1" fill="currentColor" opacity=".15"/><rect x="0" y="41" width="38" height="7" rx="0" fill="currentColor" opacity=".7"/></svg>
+                  <span>Corporate</span>
+                </button>
+              </div>
+            </div>
+            <div style="margin-top:10px;">
+              <div class="swatch-row"><div class="swatch" id="sw-p"><div class="swatch-bg" id="sw-p-bg"></div><input type="color" id="col-p" value="#1a3a6b" oninput="applyDocColors()"></div><span class="swatch-lbl">Primary colour</span></div>
+              <div class="swatch-row"><div class="swatch" id="sw-a"><div class="swatch-bg" id="sw-a-bg"></div><input type="color" id="col-a" value="#e8a020" oninput="applyDocColors()"></div><span class="swatch-lbl">Accent colour</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="efsec">
+        <div class="efhdr" onclick="this.closest('.efsec').classList.toggle('col')">
+          <div class="efhdr-t"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Your Business</div>
+          <span class="efarr">▾</span>
+        </div>
+        <div class="efbd">
+          <div class="form-stack">
+            <div class="fg"><label>Business Name <span style="font-size:.7rem;font-weight:400;color:var(--muted);margin-left:4px;">· from Settings</span></label><input id="e-bname" readonly style="background:var(--sur2);cursor:not-allowed;opacity:.75;" title="Edit your business name in Settings"></div>
+            <div class="fg"><label>Tagline <span style="font-size:.7rem;font-weight:400;color:var(--muted);">· from Settings</span></label><input id="e-btag" readonly style="background:var(--sur2);cursor:not-allowed;opacity:.75;" title="Edit in Settings"></div>
+            <div class="fg"><label>Address <span style="font-size:.7rem;font-weight:400;color:var(--muted);">· from Settings</span></label><textarea id="e-baddr" rows="2" readonly style="background:var(--sur2);cursor:not-allowed;opacity:.75;resize:none;" title="Edit in Settings"></textarea></div>
+            <div class="fg2">
+              <div class="fg"><label>Phone <span style="font-size:.7rem;font-weight:400;color:var(--muted);">· from Settings</span></label><input id="e-bphone" type="tel" readonly style="background:var(--sur2);cursor:not-allowed;opacity:.75;" title="Edit in Settings"></div>
+              <div class="fg"><label>Email <span style="font-size:.7rem;font-weight:400;color:var(--muted);">· from Settings</span></label><input id="e-bemail" type="email" readonly style="background:var(--sur2);cursor:not-allowed;opacity:.75;" title="Edit in Settings"></div>
+            </div>
+            <div class="fg"><label>Reg. No. <span style="font-size:.7rem;font-weight:400;color:var(--muted);">· from Settings</span></label><input id="e-breg" readonly style="background:var(--sur2);cursor:not-allowed;opacity:.75;" title="Edit in Settings"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="efsec">
+        <div class="efhdr" onclick="this.closest('.efsec').classList.toggle('col')">
+          <div class="efhdr-t"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Invoice Details</div>
+          <span class="efarr">▾</span>
+        </div>
+        <div class="efbd">
+          <div class="form-stack">
+            <div class="fg2">
+              <div class="fg"><label>Invoice No.</label><input id="e-num" oninput="rd()" maxlength="20"></div>
+              <div class="fg"><label>Currency</label>
+                <select id="e-cur" onchange="rd()"></select>
+              </div>
+            </div>
+            <div class="fg2">
+              <div class="fg"><label>Issue Date</label><div class="dp-wrap"><input id="e-d1" class="dp-input" placeholder="Select date" readonly onclick="toggleDP('dp1')"><div class="dp-cal" id="dp1"></div></div></div>
+              <div class="fg"><label>Due Date</label><div class="dp-wrap"><input id="e-d2" class="dp-input" placeholder="Select date" readonly onclick="toggleDP('dp2')"><div class="dp-cal" id="dp2"></div></div></div>
+            </div>
+            <div class="fg"><label>Payment Terms</label><input id="e-terms" value="Net 30 days" oninput="rd()" maxlength="80"></div>
+            <div class="fg"><label>Status</label>
+              <select id="e-status" onchange="rd()">
+                <option value="draft">Draft</option><option value="issued">Issued</option>
+                <option value="paid">Paid</option><option value="overdue">Overdue</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="efsec">
+        <div class="efhdr" onclick="this.closest('.efsec').classList.toggle('col')">
+          <div class="efhdr-t"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Client / Bill To</div>
+          <span class="efarr">▾</span>
+        </div>
+        <div class="efbd">
+          <div class="form-stack">
+            <div class="fg"><label>Client Name</label>
+              <div class="acw">
+                <input id="e-cname" type="text" oninput="cAC(this.value);rd()" placeholder="Type to search saved clients…" maxlength="80" autocomplete="off">
+                <div class="acd" id="c-drop"></div>
+              </div>
+            </div>
+            <div class="fg"><label>Address</label><textarea id="e-caddr" rows="3" oninput="rd()" maxlength="200" placeholder="123 Street, City, Postcode"></textarea></div>
+            <div class="fg2">
+              <div class="fg"><label>Phone</label><input id="e-cphone" type="tel" oninput="rd()" maxlength="20" placeholder="+44 7700 000000" pattern="[+][0-9\s\-()]+"></div>
+              <div class="fg"><label>Email</label><input id="e-cemail" type="email" oninput="rd()" maxlength="100" placeholder="client@example.com"></div>
+            </div>
+            <button class="btn btn-o btn-sm w100" onclick="saveCurrentClient()">
+              <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+              Save as Client
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="efsec">
+        <div class="efhdr" onclick="this.closest('.efsec').classList.toggle('col')">
+          <div class="efhdr-t"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg>Line Items</div>
+          <span class="efarr">▾</span>
+        </div>
+        <div class="efbd">
+          <div class="ih"><span>Description</span><span>Qty</span><span>Price</span><span>Amount</span></div>
+          <div id="item-rows"></div>
+          <button class="add-row" onclick="addRow()">＋ Add Line Item</button>
+        </div>
+      </div>
+
+      <div class="efsec">
+        <div class="efhdr" onclick="this.closest('.efsec').classList.toggle('col')">
+          <div class="efhdr-t"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Tax</div>
+          <span class="efarr">▾</span>
+        </div>
+        <div class="efbd">
+          <div class="fg2" style="margin-bottom:8px;">
+            <div class="fg"><label>VAT / Tax %</label><input id="e-vat" type="number" value="0" min="0" max="100" step="0.5" placeholder="0" oninput="rd()"></div>
+            <div class="fg">
+              <label>Apply Tax</label>
+              <div class="toggle-row" style="margin-top:8px;">
+                <label class="toggle"><input type="checkbox" id="e-vaton" onchange="rd()"><span class="toggle-sl"></span></label>
+                <span class="toggle-lbl" style="font-size:.8rem;">Enable VAT/Tax</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="efsec">
+        <div class="efhdr" onclick="this.closest('.efsec').classList.toggle('col')">
+          <div class="efhdr-t"><svg viewBox="0 0 24 24"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>Discount</div>
+          <span class="efarr">▾</span>
+        </div>
+        <div class="efbd">
+          <div class="fg"><label>Discount %</label><input id="e-disc" type="number" value="0" min="0" max="100" step="0.5" placeholder="0" oninput="rd()"></div>
+        </div>
+      </div>
+
+      <div class="efsec">
+        <div class="efhdr" onclick="this.closest('.efsec').classList.toggle('col')">
+          <div class="efhdr-t"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Bank & Notes</div>
+          <span class="efarr">▾</span>
+        </div>
+        <div class="efbd">
+          <div class="form-stack">
+            <div class="fg"><label>Bank Name</label><input id="e-bank" oninput="rd()" maxlength="60"></div>
+            <div class="fg"><label>Account Name</label><input id="e-aname" oninput="rd()" maxlength="80"></div>
+            <div class="fg2">
+              <div class="fg"><label>Account No.</label><input id="e-anum" oninput="rd()" maxlength="30"></div>
+              <div class="fg"><label>Sort / IBAN</label><input id="e-sort" oninput="rd()" maxlength="30"></div>
+            </div>
+            <div class="fg"><label>Notes / Terms</label><textarea id="e-notes" rows="2" oninput="rd()" maxlength="500" placeholder="Additional notes, payment instructions…"></textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="editor-btns" style="padding:14px 16px;display:flex;flex-direction:column;gap:7px;">
+        <button class="btn btn-p w100" style="padding:11px;" onclick="saveInvoice()">
+          <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+          Save Invoice
+        </button>
+        <button class="btn btn-a w100" style="padding:11px;" onclick="exportPDF()">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download PDF (A4)
+        </button>
+        <button class="btn btn-o w100" style="padding:11px;" onclick="duplicateInvoice()">
+          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Duplicate
+        </button>
+        <button class="btn btn-g w100" style="padding:11px;" onclick="resetDraft()">↺ Reset Draft</button>
+      </div>
+    </aside>
+
+    <!-- RIGHT: PREVIEW -->
+    <div class="ep" id="ep">
+      <div class="ep-bar">
+        <span class="lbl-tag">A4 Preview</span>
+        <button class="btn btn-o btn-sm" id="btn-preview" onclick="togglePreview()" title="Focus mode: preview full page">👁 Preview</button>
+        <button class="btn btn-o btn-sm" onclick="saveInvoice()">💾 Save</button>
+        <button class="btn btn-a btn-sm" onclick="printInvoice()" title="Recommended: reliable PDF export via your browser print engine">⬇ Export PDF <span class="hide-sm" style="font-weight:700;opacity:.8;">(Recommended)</span></button>
+        <button class="btn btn-o btn-sm" onclick="exportPDF()" title="Beta: may depend on online PDF engine and could format differently">⚙ Advanced PDF <span class="hide-sm" style="opacity:.75;">(Beta)</span></button>
+      </div>
+      <div class="doc-scaler" id="doc-scaler">
+        <div id="doc" class="dt-blue">
+          <div id="dh"></div>
+          <div id="ds" class="ds"></div>
+          <div class="dbody" id="dbody"></div>
+          <div id="dbot" class="dbot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+<!-- /shell -->
+
+<!-- ══ MODALS ══ -->
+
+<div class="overlay" id="m-ob" style="z-index:1100;">
+  <div class="modal" style="max-width:540px;width:95%;">
+
+    <!-- Header -->
+    <div class="mh" style="border-bottom:1px solid var(--bd);padding:16px 20px;display:flex;align-items:center;">
+      <div style="flex:1;">
+        <div id="ob-title" style="font-size:.97rem;font-weight:700;color:var(--P);">👋 Welcome to InvoKit Pro!</div>
+        <div style="font-size:.73rem;color:var(--muted);margin-top:2px;">Step <span id="ob-step-num">1</span> of 2 — complete setup to continue</div>
+      </div>
+      <div style="display:flex;gap:5px;margin-left:12px;">
+        <div id="ob-dot-0" style="width:8px;height:8px;border-radius:50%;background:var(--P);transition:.2s;"></div>
+        <div id="ob-dot-1" style="width:8px;height:8px;border-radius:50%;background:var(--bd);transition:.2s;"></div>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="mb" style="padding:20px;max-height:62vh;overflow-y:auto;">
+
+      <!-- STEP 0 -->
+      <div id="ob-s0">
+        <div style="font-size:.73rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:14px;">Business Profile</div>
+        <div style="display:grid;gap:12px;">
+
+          <div>
+            <label style="font-size:.78rem;font-weight:600;color:var(--ink2);display:block;margin-bottom:4px;">
+              Business Name <span style="color:#e53;">*</span>
+              <span style="font-weight:400;color:var(--muted);">(locked to licence)</span>
+            </label>
+            <div style="position:relative;">
+              <input id="ob-bname" type="text" readonly maxlength="80"
+                style="width:100%;padding:9px 36px 9px 11px;border:1.5px solid var(--bd2);border-radius:7px;
+                       font-size:.87rem;font-family:inherit;background:#f3f4f6;color:var(--ink);
+                       cursor:not-allowed;box-sizing:border-box;">
+              <span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:.85rem;">🔒</span>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;">
+            <div>
+              <label style="font-size:.78rem;font-weight:600;color:var(--ink2);display:block;margin-bottom:4px;">Tagline / Type <span style="color:#e53;">*</span></label>
+              <input id="ob-tag" type="text" placeholder="e.g. Freelance Designer" maxlength="60"
+                style="width:100%;padding:9px 11px;border:1.5px solid var(--bd2);border-radius:7px;
+                       font-size:.87rem;font-family:inherit;background:var(--bg);color:var(--ink);box-sizing:border-box;">
+            </div>
+            <div>
+              <label style="font-size:.78rem;font-weight:600;color:var(--ink2);display:block;margin-bottom:4px;">Currency <span style="color:#e53;">*</span></label>
+              <select id="ob-cur"
+                style="width:100%;padding:9px 11px;border:1.5px solid var(--bd2);border-radius:7px;
+                       font-size:.87rem;font-family:inherit;background:var(--bg);color:var(--ink);box-sizing:border-box;"></select>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;">
+            <div>
+              <label style="font-size:.78rem;font-weight:600;color:var(--ink2);display:block;margin-bottom:4px;">Email <span style="color:#e53;">*</span></label>
+              <input id="ob-email" type="email" placeholder="hello@yourbusiness.com" maxlength="100"
+                style="width:100%;padding:9px 11px;border:1.5px solid var(--bd2);border-radius:7px;
+                       font-size:.87rem;font-family:inherit;background:var(--bg);color:var(--ink);box-sizing:border-box;">
+            </div>
+            <div>
+              <label style="font-size:.78rem;font-weight:600;color:var(--ink2);display:block;margin-bottom:4px;">Phone <span style="color:#e53;">*</span></label>
+              <input id="ob-phone" type="tel" placeholder="+44 7700 000000" maxlength="20"
+                style="width:100%;padding:9px 11px;border:1.5px solid var(--bd2);border-radius:7px;
+                       font-size:.87rem;font-family:inherit;background:var(--bg);color:var(--ink);box-sizing:border-box;">
+            </div>
+          </div>
+
+          <div>
+            <label style="font-size:.78rem;font-weight:600;color:var(--ink2);display:block;margin-bottom:4px;">Address <span style="color:#e53;">*</span></label>
+            <textarea id="ob-addr" rows="2" placeholder="123 Business Street, City, Postcode" maxlength="200"
+              style="width:100%;padding:9px 11px;border:1.5px solid var(--bd2);border-radius:7px;
+                     font-size:.87rem;font-family:inherit;background:var(--bg);color:var(--ink);
+                     resize:vertical;box-sizing:border-box;"></textarea>
+          </div>
+
+          <div>
+            <label style="font-size:.78rem;font-weight:600;color:var(--ink2);display:block;margin-bottom:4px;">
+              Reg Number <span style="font-weight:400;color:var(--muted);">(optional)</span>
+            </label>
+            <input id="ob-reg" type="text" placeholder="e.g. 12345678" maxlength="30"
+              style="width:100%;padding:9px 11px;border:1.5px solid var(--bd2);border-radius:7px;
+                     font-size:.87rem;font-family:inherit;background:var(--bg);color:var(--ink);box-sizing:border-box;">
+          </div>
+
+        </div>
+        <div id="ob-err-0" style="font-size:.78rem;color:#e53;min-height:18px;margin-top:10px;"></div>
+      </div>
+
+      <!-- STEP 1 -->
+      <div id="ob-s1" style="display:none;">
+        <div style="font-size:.73rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:14px;">Bank Details</div>
+        <div style="display:grid;gap:12px;">
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;">
+            <div>
+              <label style="font-size:.78rem;font-weight:600;color:var(--ink2);display:block;margin-bottom:4px;">Bank Name <span style="color:#e53;">*</span></label>
+              <input id="ob-bank" type="text" placeholder="e.g. Barclays" maxlength="60"
+                style="width:100%;padding:9px 11px;border:1.5px solid var(--bd2);border-radius:7px;
+                       font-size:.87rem;font-family:inherit;background:var(--bg);color:var(--ink);box-sizing:border-box;">
+            </div>
+            <div>
+              <label style="font-size:.78rem;font-weight:600;color:var(--ink2);display:block;margin-bottom:4px;">Account Name <span style="color:#e53;">*</span></label>
+              <input id="ob-aname" type="text" placeholder="Full account name" maxlength="80"
+                style="width:100%;padding:9px 11px;border:1.5px solid var(--bd2);border-radius:7px;
+                       font-size:.87rem;font-family:inherit;background:var(--bg);color:var(--ink);box-sizing:border-box;">
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;">
+            <div>
+              <label style="font-size:.78rem;font-weight:600;color:var(--ink2);display:block;margin-bottom:4px;">Account Number <span style="color:#e53;">*</span></label>
+              <input id="ob-anum" type="text" placeholder="00000000" maxlength="30"
+                style="width:100%;padding:9px 11px;border:1.5px solid var(--bd2);border-radius:7px;
+                       font-size:.87rem;font-family:inherit;background:var(--bg);color:var(--ink);box-sizing:border-box;">
+            </div>
+            <div>
+              <label style="font-size:.78rem;font-weight:600;color:var(--ink2);display:block;margin-bottom:4px;">
+                Sort Code / IBAN <span style="font-weight:400;color:var(--muted);">(optional)</span>
+              </label>
+              <input id="ob-sort" type="text" placeholder="00-00-00" maxlength="30"
+                style="width:100%;padding:9px 11px;border:1.5px solid var(--bd2);border-radius:7px;
+                       font-size:.87rem;font-family:inherit;background:var(--bg);color:var(--ink);box-sizing:border-box;">
+            </div>
+          </div>
+
+          <div>
+            <label style="font-size:.78rem;font-weight:600;color:var(--ink2);display:block;margin-bottom:6px;">
+              Logo <span style="font-weight:400;color:var(--muted);">(optional)</span>
+            </label>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <label style="padding:8px 14px;background:var(--sur2);border:1.5px dashed var(--bd);
+                            border-radius:7px;cursor:pointer;font-size:.82rem;color:var(--ink2);">
+                📁 Choose file
+                <input type="file" id="ob-logo-inp" accept="image/*" style="display:none;" onchange="obLogoPreview(event)">
+              </label>
+              <div id="ob-logo-preview" style="display:none;align-items:center;gap:8px;">
+                <img id="ob-logo-img" style="height:38px;max-width:110px;object-fit:contain;border-radius:4px;">
+                <button type="button" onclick="obLogoRemove()"
+                  style="font-size:.75rem;color:#e53;background:none;border:none;cursor:pointer;padding:0;">✕ Remove</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div id="ob-err-1" style="font-size:.78rem;color:#e53;min-height:18px;margin-top:10px;"></div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="mf" style="display:flex;justify-content:space-between;align-items:center;
+                           padding:14px 20px;border-top:1px solid var(--bd);">
+      <button id="ob-back-btn" type="button" onclick="obNavigate(-1)"
+        class="btn btn-g" style="display:none;">← Back</button>
+      <div style="flex:1;"></div>
+      <button id="ob-next-btn" type="button" onclick="obNavigate(1)" class="btn btn-p">Next →</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="overlay" id="m-reset-all">
+  <div class="modal">
+    <div class="mh"><h3 style="color:var(--err);">⚠ Reset ALL Data</h3><button class="mx" onclick="closeM('m-reset-all')">×</button></div>
+    <div class="mb">
+      <p style="font-size:.84rem;color:var(--ink2);line-height:1.65;margin-bottom:8px;">Permanently deletes <strong>all invoices, clients, items, settings.</strong> Cannot be undone.</p>
+      <p style="font-size:.82rem;color:var(--muted);margin-bottom:4px;">Type <strong style="color:var(--err);">DELETE</strong> to confirm:</p>
+      <input class="del-inp" id="del-confirm-input" placeholder="Type DELETE here" oninput="checkDelConfirm()">
+    </div>
+    <div class="mf">
+      <button class="btn btn-o" onclick="closeM('m-reset-all')">Cancel</button>
+      <button class="btn btn-d" id="del-confirm-btn" disabled onclick="executeResetAll()">Reset Everything</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="m-client">
+  <div class="modal">
+    <div class="mh"><h3 id="cm-title">Add Client</h3><button class="mx" onclick="closeM('m-client')">×</button></div>
+    <div class="mb">
+      <div class="form-stack">
+        <div class="fg"><label>Full Name <span style="color:#e53;">*</span></label><input id="cm-name" placeholder="Company or person name" maxlength="80"></div>
+        <div class="fg2">
+          <div class="fg"><label>Email</label><input id="cm-email" type="email" maxlength="100"></div>
+          <div class="fg"><label>Phone</label><input id="cm-phone" type="tel" maxlength="20"></div>
+        </div>
+        <div class="fg"><label>Address</label><textarea id="cm-addr" rows="2" maxlength="200"></textarea></div>
+        <div class="fg"><label>Notes</label><input id="cm-notes" placeholder="Optional" maxlength="200"></div>
+      </div>
+    </div>
+    <div class="mf">
+      <button class="btn btn-o" onclick="closeM('m-client')">Cancel</button>
+      <button class="btn btn-p" onclick="saveClient()">Save Client</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="m-item">
+  <div class="modal">
+    <div class="mh"><h3 id="im-title">Add Item / Service</h3><button class="mx" onclick="closeM('m-item')">×</button></div>
+    <div class="mb">
+      <div class="form-stack">
+        <div class="fg"><label>Item Name <span style="color:var(--err);">*</span></label><input id="im-name" placeholder="e.g. Web Design, Delivery Fee" maxlength="80" autocomplete="off"></div>
+        <div class="fg"><label>Description</label><input id="im-desc" placeholder="Short description shown on invoice" maxlength="150"></div>
+        <div class="fg2">
+          <div class="fg"><label>Default Price</label><input id="im-price" type="number" placeholder="0.00" step="0.01" min="0"></div>
+          <div class="fg">
+            <label>Unit</label>
+            <select id="im-unit">
+              <option value="">— none —</option>
+              <option value="hr">hr (per hour)</option>
+              <option value="day">day (per day)</option>
+              <option value="item">item</option>
+              <option value="session">session</option>
+              <option value="lesson">lesson</option>
+              <option value="project">project</option>
+              <option value="word">word</option>
+              <option value="page">page</option>
+              <option value="km">km</option>
+              <option value="kg">kg</option>
+            </select>
+          </div>
+        </div>
+        <div class="fg">
+          <label>Category <span style="font-size:.7rem;color:var(--muted);">· optional, for your own reference</span></label>
+          <input id="im-category" placeholder="e.g. Consultancy, Design, Logistics" maxlength="40">
+        </div>
+        <div class="fg">
+          <label>Notes <span style="font-size:.7rem;color:var(--muted);">· internal only, not shown on invoice</span></label>
+          <input id="im-notes" placeholder="Optional internal note" maxlength="200">
+        </div>
+      </div>
+    </div>
+    <div class="mf">
+      <button class="btn btn-o" onclick="closeM('m-item')">Cancel</button>
+      <button class="btn btn-p" onclick="saveItem()">Save Item</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="m-confirm">
+  <div class="modal">
+    <div class="mh"><h3 id="conf-title">Confirm</h3><button class="mx" onclick="closeM('m-confirm')">×</button></div>
+    <div class="mb"><p id="conf-msg" style="font-size:.85rem;line-height:1.65;color:var(--ink2);"></p></div>
+    <div class="mf">
+      <button class="btn btn-o" onclick="closeM('m-confirm')">Cancel</button>
+      <button class="btn btn-d" id="conf-ok">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="m-receipt">
+  <div class="modal" style="max-width:500px;width:95%;">
+    <div class="mh">
+      <h3 id="rct-title">New Receipt</h3>
+      <button class="mx" onclick="closeM('m-receipt')">×</button>
+    </div>
+    <div class="mb" style="padding:18px 20px;">
+      <div style="display:flex;gap:0;border:1.5px solid var(--bd);border-radius:8px;overflow:hidden;margin-bottom:16px;">
+        <button id="rct-mode-client" type="button" onclick="rctSetMode('client')"
+          style="flex:1;padding:8px;border:none;background:var(--P);color:#fff;font-size:.82rem;font-weight:600;cursor:pointer;">
+          👤 Linked to Client
+        </button>
+        <button id="rct-mode-walkin" type="button" onclick="rctSetMode('walkin')"
+          style="flex:1;padding:8px;border:none;background:var(--sur2);color:var(--ink2);font-size:.82rem;font-weight:600;cursor:pointer;">
+          🚶 Walk-in / One-off
+        </button>
+      </div>
+      <div class="form-stack">
+        <div id="rct-field-client" class="fg" style="position:relative;">
+          <label>Client <span style="font-size:.75rem;font-weight:400;color:var(--muted);">(optional — type to search)</span></label>
+          <input id="rct-client" class="fi" placeholder="Start typing client name…" oninput="rctClientSearch(this.value)" autocomplete="off" maxlength="80">
+          <div id="rct-client-dropdown" style="display:none;position:absolute;z-index:200;background:var(--sur);border:1.5px solid var(--bd);border-radius:6px;max-height:160px;overflow-y:auto;width:100%;box-shadow:0 4px 12px rgba(0,0,0,.15);top:100%;left:0;"></div>
+        </div>
+        <div id="rct-field-walkin" style="display:none;">
+          <div class="fg2">
+            <div class="fg">
+              <label>Payer Name <span style="color:#e53;">*</span></label>
+              <input id="rct-payer" class="fi" placeholder="Full name" maxlength="80">
+            </div>
+            <div class="fg">
+              <label>Phone <span style="font-size:.75rem;color:var(--muted);">(optional)</span></label>
+              <input id="rct-payer-phone" class="fi" type="tel" placeholder="+44 7700…" maxlength="20">
+            </div>
+          </div>
+        </div>
+        <div class="fg">
+          <label>Description — what is this payment for? <span style="color:#e53;">*</span></label>
+          <input id="rct-desc" class="fi" placeholder="e.g. Website design, Consulting fee…" maxlength="150">
+        </div>
+        <div class="fg2">
+          <div class="fg">
+            <label>Amount <span style="color:#e53;">*</span></label>
+            <input id="rct-amount" type="number" step="0.01" min="0.01" max="9999999.99" class="fi" placeholder="0.00">
+          </div>
+          <div class="fg">
+            <label>Currency</label>
+            <select id="rct-cur" class="fi"></select>
+          </div>
+        </div>
+        <div class="fg2">
+          <div class="fg">
+            <label>Payment Method</label>
+            <select id="rct-method" class="fi">
+              <option>Bank Transfer</option><option>Cash</option><option>Card</option>
+              <option>Mobile Money</option><option>PayPal</option><option>Other</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Date</label>
+            <input id="rct-date" type="date" class="fi">
+          </div>
+        </div>
+        <div class="fg">
+          <label>Notes <span style="font-size:.75rem;color:var(--muted);">(optional)</span></label>
+          <input id="rct-notes" class="fi" placeholder="Reference or any extra notes…" maxlength="200">
+        </div>
+        <input type="hidden" id="rct-num">
+        <input type="hidden" id="rct-client-id">
+        <input type="hidden" id="rct-mode-val" value="client">
+      </div>
+    </div>
+    <div class="mf">
+      <button class="btn btn-o" onclick="closeM('m-receipt')">Cancel</button>
+      <button class="btn btn-a" onclick="saveReceipt()">💾 Save Receipt</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MARK AS PAID MODAL ══ -->
+<div class="overlay" id="m-markpaid">
+  <div class="modal" style="max-width:360px;">
+    <div class="mh">
+      <h3>Mark as Paid</h3>
+      <button class="mx" onclick="closeM('m-markpaid')">×</button>
+    </div>
+    <div class="mb">
+      <div id="mp-inv-info" style="background:var(--sur2);border-radius:var(--rl);padding:10px 12px;margin-bottom:14px;font-size:.82rem;color:var(--ink2);"></div>
+      <div class="fg">
+        <label>Payment Method</label>
+        <select class="fi" id="mp-method">
+          <option>Bank Transfer</option><option>Cash</option><option>Card</option>
+          <option>Mobile Money</option><option>PayPal</option><option>Other</option>
+        </select>
+      </div>
+      <div class="fg" style="margin-top:10px;">
+        <label>Payment Date</label>
+        <input class="fi" type="date" id="mp-date">
+      </div>
+    </div>
+    <div class="mf">
+      <button class="btn btn-g" onclick="closeM('m-markpaid')">Cancel</button>
+      <button class="btn btn-p" id="mp-confirm-btn" onclick="confirmMarkPaid()">✓ Mark as Paid</button>
+    </div>
+  </div>
+</div>
+
+<!-- FIX #4: Renamed id and class to toast-wrap (was 'twrap' — clashed with table scroll wrapper) -->
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<!-- ══ LICENCE LOCK SCREEN ══ -->
+<div id="bkp-lock" style="display:none;">
+  <div class="bkp-lock-box">
+
+    <!-- Top — Navy brand header -->
+    <div class="bkp-lock-top">
+      <div class="bkp-lock-logo">
+        <img src="data:image/png;base64,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" alt="InvoKit Pro">
+      </div>
+      <div class="bkp-lock-title">InvoKit Pro</div>
+      <div class="bkp-lock-tagline">Professional Offline Invoicing</div>
+    </div>
+
+    <!-- Body — key entry -->
+    <div class="bkp-lock-body">
+      <div class="bkp-lock-sub">
+        Enter your activation key below. Your key was emailed to you after purchase.
+      </div>
+
+      <div class="bkp-lock-inp-wrap">
+        <svg class="bkp-lock-inp-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        <input class="bkp-lock-inp" id="bkp-key-inp"
+          type="text"
+          placeholder="BKP-XXXX-XXXXXXXX"
+          autocomplete="off" autocorrect="off" autocapitalize="characters"
+          spellcheck="false"
+          oninput="this.value=this.value.toUpperCase()"
+          onkeydown="if(event.key==='Enter')bkpActivate()">
+      </div>
+
+      <div class="bkp-lock-err" id="bkp-err"></div>
+
+      <button class="bkp-lock-btn" onclick="bkpActivate()">
+        Activate Licence
+      </button>
+
+      <div class="bkp-lock-divider">Don't have a key?</div>
+
+      <a class="bkp-lock-buy" href="https://getinvokitpro.com" target="_blank">
+        Get your licence at getinvokitpro.com &rarr;
+      </a>
+    </div>
+
+    <!-- Footer -->
+    <div class="bkp-lock-footer">
+      &copy; 2025 Creovate Glocal Ltd. All rights reserved. RC: 9174160<br>
+      <a href="mailto:support@getinvokitpro.com">support@getinvokitpro.com</a>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
