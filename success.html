@@ -49,7 +49,14 @@ body::before{
 .page-shell{position:relative;z-index:10;min-height:100vh;padding:30px 5% 40px;}
 .topbar{display:flex;justify-content:space-between;align-items:center;gap:20px;margin:0 auto 26px;max-width:1160px;}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);}
-.brand-mark{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--gold),#8d6a1f);display:flex;align-items:center;justify-content:center;color:#111;font-weight:800;font-size:18px;box-shadow:0 10px 24px var(--gold-glow);}
+.brand-mark{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  background:#111 url('./invokit-icon-512.png') center/cover no-repeat;
+  box-shadow:0 10px 24px rgba(212,175,55,.22);
+  flex:0 0 42px;
+}
 .brand-name{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;letter-spacing:.01em;}
 .top-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
 .top-link,.btn,.btn-secondary{border:none;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:12px;transition:all var(--tr);cursor:pointer;}
