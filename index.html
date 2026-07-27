@@ -24,13 +24,13 @@ body{
 :root{
   --gold:#c9a84c;
   --gold2:#e8c97a;
-  --gold-dim:rgba(201,168,76,0.12);
-  --gold-glow:rgba(201,168,76,0.25);
-  --navy:#0d0b0a;
-  --navy2:#14110f;
-  --navy3:#181410;
-  --surface:#1c1712;
-  --surface2:#221c16;
+  --gold-dim:rgba(201,168,76,0.14);
+  --gold-glow:rgba(201,168,76,0.34);
+  --navy:#0b0805;
+  --navy2:#130e08;
+  --navy3:#18120a;
+  --surface:#1c150c;
+  --surface2:#241b10;
   --border:rgba(255,255,255,0.07);
   --border2:rgba(201,168,76,0.2);
   --text:#e8e4dc;
@@ -655,14 +655,14 @@ body{font-size:17px;}
 
 body{
   background:
-    radial-gradient(circle at 50% -10%, rgba(201,168,76,0.13), transparent 32%),
-    radial-gradient(circle at 12% 18%, rgba(255,255,255,0.025), transparent 18%),
-    linear-gradient(180deg,#0b0908 0%, #0d0b0a 28%, #100d0a 100%);
+    radial-gradient(circle at 50% -10%, rgba(201,168,76,0.16), transparent 34%),
+    radial-gradient(circle at 12% 18%, rgba(255,255,255,0.022), transparent 18%),
+    linear-gradient(180deg,#080503 0%, #0b0805 28%, #0e0a06 100%);
   color:var(--text);
 }
 
 nav{
-  background:rgba(12,10,8,0.80);
+  background:rgba(10,7,4,0.82);
   border-bottom:1px solid rgba(255,255,255,0.08);
   box-shadow:0 12px 40px rgba(0,0,0,0.28);
 }
@@ -687,7 +687,7 @@ nav{
 }
 .hero-glow{
   width:1040px;height:1040px;
-  background:radial-gradient(ellipse at center, rgba(201,168,76,0.13) 0%, rgba(201,168,76,0.04) 34%, transparent 68%);
+  background:radial-gradient(ellipse at center, rgba(201,168,76,0.18) 0%, rgba(201,168,76,0.05) 34%, transparent 68%);
   filter:blur(2px);
 }
 .hero-eyebrow{
@@ -729,7 +729,7 @@ nav{
 
 .mockup-section{padding-top:20px;}
 .device-laptop{
-  background:linear-gradient(180deg,#34302a 0%, #26221b 100%);
+  background:linear-gradient(180deg,#332d24 0%, #241e16 100%);
   box-shadow:0 48px 120px rgba(0,0,0,0.62), 0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.08);
 }
 .device-screen{
@@ -758,7 +758,7 @@ nav{
   border-radius:18px;
   background:
     linear-gradient(180deg, rgba(255,255,255,0.03), transparent 55%),
-    linear-gradient(180deg, #16130f 0%, #1a1611 100%);
+    linear-gradient(180deg, #15100a 0%, #1a140c 100%);
   box-shadow:var(--shadow-soft);
 }
 .feature-card::after{
@@ -771,7 +771,7 @@ nav{
 .feature-card:hover{
   background:
     linear-gradient(180deg, rgba(255,255,255,0.05), transparent 58%),
-    linear-gradient(180deg, #1c1712 0%, #201a13 100%);
+    linear-gradient(180deg, #1d160d 0%, #241b10 100%);
   transform:translateY(-3px);
 }
 .feature-icon{
@@ -782,12 +782,12 @@ nav{
 
 .how-section{
   background:
-    linear-gradient(180deg, #100d0a 0%, #14100c 100%);
+    linear-gradient(180deg, #0e0a06 0%, #120d08 100%);
 }
 .step-num{
   background:
     radial-gradient(circle at 30% 25%, rgba(255,255,255,0.06), transparent 35%),
-    linear-gradient(180deg,#1b1611 0%, #14100c 100%);
+    linear-gradient(180deg,#1c150d 0%, #120d08 100%);
   box-shadow:0 14px 32px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.06);
 }
 .step-title{color:#f0ece3;}
@@ -795,12 +795,12 @@ nav{
 
 .offline-section{
   background:
-    linear-gradient(180deg,#14110c 0%, #100d0a 100%);
+    linear-gradient(180deg,#120d08 0%, #0e0a06 100%);
 }
 .offline-stat{
   background:
     linear-gradient(180deg, rgba(255,255,255,0.03), transparent 55%),
-    linear-gradient(180deg, #18140f 0%, #14100c 100%);
+    linear-gradient(180deg, #17110a 0%, #120d08 100%);
   box-shadow:var(--shadow-soft);
 }
 .offline-stat-label{color:#b9b2a7;}
@@ -808,7 +808,7 @@ nav{
 .pricing-card{
   background:
     linear-gradient(180deg, rgba(255,255,255,0.035), transparent 58%),
-    linear-gradient(180deg, #1b1611 0%, #17130e 100%);
+    linear-gradient(180deg, #1c150c 0%, #17110a 100%);
   box-shadow:var(--shadow-soft);
   border:1px solid rgba(255,255,255,0.08);
 }
@@ -846,7 +846,7 @@ nav{
 .platform-badge{
   background:
     linear-gradient(180deg, rgba(255,255,255,0.03), transparent 55%),
-    linear-gradient(180deg, #1b1611 0%, #17120d 100%);
+    linear-gradient(180deg, #1c150c 0%, #17110a 100%);
   box-shadow:0 12px 28px rgba(0,0,0,0.18);
 }
 .platform-badge:hover{
@@ -1433,10 +1433,10 @@ if (nav) {
   const refreshNav = () => {
     if (window.scrollY > 14) {
       nav.style.borderBottomColor = 'rgba(255,255,255,0.11)';
-      nav.style.background = 'rgba(12,10,8,0.94)';
+      nav.style.background = 'rgba(10,7,4,0.95)';
     } else {
       nav.style.borderBottomColor = 'rgba(255,255,255,0.07)';
-      nav.style.background = 'rgba(12,10,8,0.86)';
+      nav.style.background = 'rgba(10,7,4,0.87)';
     }
   };
   refreshNav();
