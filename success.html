@@ -14,13 +14,13 @@ html{font-size:16px;scroll-behavior:smooth;}
 :root{
   --gold:#c9a84c;
   --gold2:#e8c97a;
-  --gold-dim:rgba(201,168,76,0.12);
-  --gold-glow:rgba(201,168,76,0.22);
-  --navy:#0c0d14;
-  --navy2:#111220;
-  --navy3:#161828;
-  --surface:#1a1c2e;
-  --surface2:#1f2235;
+  --gold-dim:rgba(201,168,76,0.14);
+  --gold-glow:rgba(201,168,76,0.34);
+  --navy:#0b0805;
+  --navy2:#130e08;
+  --navy3:#18120a;
+  --surface:#1c150c;
+  --surface2:#241b10;
   --border:rgba(255,255,255,0.07);
   --border2:rgba(201,168,76,0.18);
   --text:#e8e4dc;
@@ -34,7 +34,7 @@ html{font-size:16px;scroll-behavior:smooth;}
 }
 body{
   font-family:'Outfit',sans-serif;
-  background:radial-gradient(circle at top,rgba(201,168,76,0.06),transparent 28%),linear-gradient(180deg,#0b0c13 0%,#0c0d14 100%);
+  background:radial-gradient(circle at top,rgba(201,168,76,0.10),transparent 30%),linear-gradient(180deg,#0a0704 0%,#0d0a06 100%);
   color:var(--text);
   min-height:100vh;
   overflow-x:hidden;
@@ -63,7 +63,7 @@ body::before{
 .top-link{padding:10px 14px;color:var(--text2);border:1px solid var(--border);background:rgba(255,255,255,0.02);font-size:14px;}
 .top-link:hover{color:var(--text);border-color:var(--border2);}
 .main{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:start;}
-.card{background:linear-gradient(180deg,rgba(31,34,53,.92),rgba(22,24,40,.92));border:1px solid var(--border);border-radius:28px;box-shadow:0 30px 80px rgba(0,0,0,.35);backdrop-filter:blur(18px);}
+.card{background:linear-gradient(180deg,rgba(32,26,16,.92),rgba(24,18,10,.92));border:1px solid var(--border);border-radius:28px;box-shadow:0 30px 80px rgba(0,0,0,.35);backdrop-filter:blur(18px);}
 .hero-card{padding:34px;position:relative;overflow:hidden;}
 .hero-card::after{content:'';position:absolute;right:-120px;top:-120px;width:300px;height:300px;background:radial-gradient(circle,var(--gold-glow),transparent 60%);pointer-events:none;}
 .status-chip{display:inline-flex;align-items:center;gap:10px;background:var(--green-dim);color:#aef0cb;border:1px solid rgba(61,186,126,.28);padding:10px 14px;border-radius:999px;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px;}
